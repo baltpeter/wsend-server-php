@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^([0-9a-f]{32})/([^/]*)$ /wsend-server.php?param=get_file&uuid=$1&file_name=$2 [L]
+RewriteRule ^(?!wsend-server.php)([^/]*)$ /wsend-server.php?param=$1 [L]
+RewriteRule ^(?!wsend-server.php)(.*)$ /wsend-server.php [L]
