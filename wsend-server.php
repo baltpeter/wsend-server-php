@@ -2,13 +2,12 @@
 /**
  * wsend server in PHP
  * Author: Benjamin Altpeter (http://benjamin-altpeter.de)
- * GitHub:
- * More information:
+ * GitHub: http://github.com/baltpeter/wsend-server-php
  * License: The MIT License (see LICENSE.md)
  */
 
 // preferences
-$server_url = 'http://10.1.1.3';
+$server_url = 'http://10.1.1.3';     // make sure to include the protocol (i.e. http:// or https://)
 $upload_dir = '/var/www/uploads/';   // make sure the web server can write to this directory but it is not accessible from the web; has to end with a slash
 // end preferences
 
