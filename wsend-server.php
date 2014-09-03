@@ -7,10 +7,10 @@
  */
 
 // preferences
-$server_url = 'http://10.1.1.3';     // make sure to include the protocol (i.e. http:// or https://)
-$upload_dir = '/var/www/uploads/';   // make sure the web server can write to this directory but it is not accessible from the web; has to end with a slash
+$server_url = 'http://10.1.1.3';    // make sure to include the protocol (i.e. http:// or https://)
+$upload_dir = '/var/www/uploads/';  // make sure the web server can write to this directory; has to end with a slash
+$max_file_size = 0;                 // has to be specified in bytes; 0 for unlimited file size
 // end preferences
-
 
 switch ($_GET['param']) {
     case 'upload_cli':
@@ -24,8 +24,14 @@ switch ($_GET['param']) {
         );
         $file = $upload_dir . basename($uuid) . '-' .  basename($_FILES['filehandle']['name']);
 
-        if (move_uploaded_file($_FILES['filehandle']['tmp_name'], $file)) {
-            echo $server_url . '/' . $uuid . '/' . basename($_FILES['filehandle']['name']);
+
+        if(($_FILES['filehandle']['size'] <= $max_file_size) || ($max_file_size == 0)) {
+            if (move_uploaded_file($_FILES['filehandle']['tmp_name'], $file)) {
+                echo $server_url . '/' . $uuid . '/' . basename($_FILES['filehandle']['name']);
+            }
+        }
+        else {
+            echo 'File too big.';
         }
         break;
     case 'get_file';
@@ -40,6 +46,11 @@ switch ($_GET['param']) {
         else {
             header("HTTP/1.0 404 Not Found");
             echo 'Specified file does not exist.';
+        }
+        break;
+    case 'userspaceavailable':
+        if(($_POST['size'] > $max_file_size) && ($max_file_size != 0)) {
+            echo 'file is too big for your account size';
         }
         break;
     default:

@@ -7,38 +7,43 @@ This projects aims to provide an easy solution for that problem. It offers a PHP
 
 ## Installation and Configuration (server side)
 
-**Uploading the Files to your Web Host**
+**Uploading the Files to Your Web Host**  
 Upload the following two files to your web host:
 - `.htaccess`
 - `wsend-server.php`
 
-**Creating the uploads Directory**
+**Creating the uploads Directory**  
 Create a directory for the uploads. This directory does not need to be in /var/www (or to whichever folder your web server is configured).
 Make sure the web server can write to that directory:
 
     chown www-data:www-data /your/directory
 
-**Configuring wsend-server.php**
+**Configuring wsend-server.php**  
 Open `wsend-server.php` in any text editor and edit the following variables to suit your needs:
+
 - `$server_url`: Set this to the URL you want your wsend server to be accessed at. Make sure to include the protocol (ie. http:// or https://).
 - `$upload_dir`: Set this to the uploads directory you created. Don't forget the trailing slash.
+- `$max_file_size`: Set this to the maximum file size in bytes you want your users to be able to upload. Set to 0 for unlimited file size.
 
 ## Configuration (client side)
 First, install wsend as described in the official documentation.
 
-Then, edit the wsend script (~/.wsend/wsend by default) and change `protocol` and `site`.
+Then, edit the wsend script (`~/.wsend/wsend` by default) and change `protocol` and `site`.
 
 ## Current Status
-This project is in very early stages of development.
+This project is in very early stages of development.  
 The following features are implemented already:
-- Uploading files (i.e. wsend /path/to/your/file.ext)
+
+- Uploading files (i.e. `wsend /path/to/your/file.ext`)
 - Viewing and downloading files (i.e. http://wsend.server.net/661e7921dc034cc2a4bdf6e8dd84be23/file.ext)
+- Global file size limit
 
 Currently, there is no user management. Anyone can upload files and there is no way of listing, changing or deleting them from the command line. However, you can of course just browse the uploads directory on the web server. If you want a list of the local files, use `wsend --list-local`.
 
 ## Important Notes
 Please remember that this project is still work-in-progress. Not all features are implemented yet (see Current Status) and there may still be bugs.  
 While I am trying to make sure that the version I upload to this repository is always safe to use, you have to keep the following things in mind:
+
 - The wsend server is public. Anyone who knows the URL can freely upload files to it. Unfortunately, due to the few restrictions wsend imposes, this is likely to be abused for illegal purposes. If you want to only use your wsend server for yourself, currently you will have to use something like IP blocking on your web server. I do however plan to implement user management (and limited registration) in the future.
 - I am not a security professional. I am of course trying my best to implement the appropriate precautions but there may still be security vulnerabilities in this software.
 - There currently is not update mechanism, so you will have to check this repository regularly to make sure you don't miss important updates.
